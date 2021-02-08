@@ -1,0 +1,17 @@
+<h1 class="ml-2">XOXO, Gossip Bot !</h1>
+<p class="ml-2">Voici la liste de tous les potins envoyés par nos utilisateurs :</p>
+<div class="container">
+  <div class="row">
+    <% Gossip.all.each do |gossip| %>
+
+      <div class="card col-4 gossip-card" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title"><%= gossip.title%></h5>
+          <p class="card-text"><%= gossip.content%></p>
+          <%= link_to "Voir le Gossip", gossips_path(gossip.id), class: "btn btn-primary" %>
+        </div>
+      </div>
+
+    <% end %>
+  </div>
+</div>

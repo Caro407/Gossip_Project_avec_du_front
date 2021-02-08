@@ -1,3 +1,38 @@
 body {
-  background-color: blue
+  background-color: #262626;
+  color: #d8d4cf;
+}
+
+h1 {
+  font-family: 'Caveat', cursive;
+  font-weight: bold;
+  color: #507dbc;
+}
+
+a {
+  color: #507dbc;
+}
+
+a:hover {
+  color: #507dbc;
+  text-decoration: underline;
+
+}
+
+.container {
+  max-width: 1080px;
+}
+
+.btn-primary {
+  background-color: #507dbc;
+}
+
+.gossip-card {
+  background-color: #d8d4cf;
+  color: #262626;
+}
+
+.attribute {
+  font-weight: bold;
+  color: #507dbc;
 }
