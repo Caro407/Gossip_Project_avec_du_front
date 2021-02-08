@@ -1,0 +1,11 @@
+<% Gossip.all.each do |gossip| %>
+
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title"><%= gossip.title%></h5>
+    <p class="card-text"><%= gossip.content%></p>
+    <%= link_to "Voir le Gossip", gossips_path(gossip.id), class: "btn btn-primary" %>
+  </div>
+</div>
+
+<% end %>

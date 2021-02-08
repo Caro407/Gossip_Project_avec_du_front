@@ -1,0 +1,8 @@
+<h1>POTIN N°<%= params[:id]%></h1>
+
+<p>Auteur: <%= @gossip.user.full_name %></p>
+<p>Titre: <%= @gossip.title %></p>
+<p>Contenu: <%= @gossip.content %></p>
+<p>Date de création: <%= I18n.l(@gossip.created_at, format: :long) %></p>
+
+<%= link_to "Voir le profil de #{@gossip.user.full_name}", user_profile_path(@gossip.user_id)%>
