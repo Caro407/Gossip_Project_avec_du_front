@@ -1,0 +1,18 @@
+<h1>Modifier le potin <%= params[:id]%></h1>
+
+<%= form_for @gossip do |field| %>
+
+<div class="form-group">
+  <label>Titre :</label>
+    <%= field.text_field :title, class: "form-control"%>
+</div>
+
+<div class="form-group">
+  <label>Contenu :</label>
+    <%= field.text_area :content, class: "form-control"%>
+</div>
+
+<div class="form-group">
+  <button type="submit">Modifier</button>
+</div>
+<% end %>

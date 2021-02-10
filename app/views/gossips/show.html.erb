@@ -14,5 +14,11 @@
       <p><span class="attribute">Ville de résidence: </span>
         <%= City.find(@gossip.user.city_id).name %></p>
 
+  <%= link_to "Modifier ce potin", edit_gossip_path(params[:id])%>
+<br />
+<%= link_to "Supprimer ce potin", gossip_path(params[:id]), "data-confirm": "Êtes-vous sûr?", "data-method": :delete%>
+<br />
+<%= link_to "Ajouter un commentaire", new_gossip_comment_path(params[:id]) %>
+<br />
   <%= link_to "Voir le profil de #{@gossip.user.full_name}", user_profile_path(@gossip.user_id)%>
 </div>

@@ -1,0 +1,15 @@
+<%= form_tag gossip_comments_path(@gossip), method: "post" do %>
+
+<%= label_tag 'Contenu du commentaire' %>
+<%= text_area_tag 'content', @comments.content %>
+<br/>
+<br/>
+
+<%= label_tag 'Auteur' %>
+<%= text_field_tag 'user', @comments.user %>
+<br/>
+<br/>
+
+<%= submit_tag "Créer le commentaire" %>
+
+<% end %>

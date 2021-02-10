@@ -6,6 +6,8 @@ class GossipsController < ApplicationController
   def index
   end
 
+  # CREER UN NOUVEAU POTIN
+
   def new
     @gossip = Gossip.new
   end
@@ -15,7 +17,6 @@ class GossipsController < ApplicationController
   end
 
   def create
-    pp params
     #1ère étape : récupérer les params
     user = User.find_by(first_name: create_params[:user])
 
@@ -38,5 +39,50 @@ class GossipsController < ApplicationController
       render :new
       return
     end
+  end
+
+  # EDITER UN POTIN EXISTANT
+
+  def edit_params
+    params.permit(:id)
+  end
+
+  def edit
+    @gossip = Gossip.find(edit_params[:id])
+  end
+
+  def update_params
+    params.require(:gossip).permit(:title, :content)
+  end
+
+  def update
+    #1ère étape : récupérer les params
+    @gossip = Gossip.find(params[:id])
+
+    #2ème étape : on prépare la nouvelle instance
+    @gossip.title = update_params[:title]
+    @gossip.content = update_params[:content]
+
+    #3ème étape : save and redirect
+    if @gossip.save
+      redirect_to gossips_path(params[:id])
+      flash[:success] = "Potin mis à jour !"
+    else
+      flash[:warning] = "Echec : " + @gossip.errors.full_messages.join(" ")
+      render :edit
+    end
+  end
+
+  # SUPPRIMER UN POTIN
+  def destroy_params
+    params.permit(:id)
+  end
+
+  def destroy
+    @gossip = Gossip.find(destroy_params[:id])
+
+    @gossip.destroy
+
+    redirect_to gossips_path
   end
 end

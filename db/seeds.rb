@@ -26,6 +26,6 @@ end
 #gossip.tags << Tag.all.sample(rand(1..3))
 #end
 
-#20.times do |comments|
-#  Comment.create(user: User.all.sample, gossip: Gossip.all.sample, content: Faker::Lorem.sentence(word_count: 10))
-#end
+20.times do |comments|
+  Comment.create(user: User.all.sample, gossip: Gossip.all.sample, content: Faker::Lorem.sentence(word_count: 10))
+end
