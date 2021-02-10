@@ -1,22 +1,29 @@
-<h1 class="ml-2">XOXO, Gossip Bot !</h1>
+<div class="jumbotron">
+  <h1 class="display-4">XOXO, Gossip Bot !</h1>
+  <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+  <hr class="my-4">
+  <p>Tu veux nous partager un nouveau potin ?</p>
+  <p class="lead">
 
+    <%= link_to "C'est par ici !", new_gossip_path, class: "btn btn-primary btn-lg", role: "button"%>
+  </p>
+</div>
 
-<p>Tu veux nous partager un nouveau potin ?</p>
-<%= link_to "C'est par ici !", new_gossip_path%>
 
 <p class="ml-2">Voici la liste de tous les potins envoyés par nos utilisateurs :</p>
+
+
 <div class="container">
-  <div class="row">
-    <% Gossip.all.each do |gossip| %>
+<div class="list-group">
+  <% Gossip.all.each do |gossip| %>
+  <button type="button" class="list-group-item list-group-item-action">
+    Potin n°<%= gossip.id %>.
+    <br/>
+    <%= link_to "#{gossip.title}", gossip_path(gossip.id)%>
+    <br/>
+    Ajouté le <%= I18n.l(gossip.created_at, format: :short) %>
+  </button>
 
-      <div class="card col-4 gossip-card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title"><%= gossip.title%></h5>
-          <p class="card-text"><%= gossip.content%></p>
-          <%= link_to "Voir le Gossip", gossip_path(gossip.id), class: "btn btn-primary" %>
-        </div>
-      </div>
-
-    <% end %>
-  </div>
+  <% end %>
+</div>
 </div>

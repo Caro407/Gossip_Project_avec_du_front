@@ -1,0 +1,12 @@
+<h1><%= @city.name %></h1>
+
+
+<%= @gossips.each do |gossip|%>
+<button type="button" class="list-group-item list-group-item-action">
+  Potin n°<%= gossip.id %>.
+  <br/>
+  <%= link_to "#{gossip.title}", gossip_path(gossip.id)%>
+  <br/>
+  Ajouté le <%= I18n.l(gossip.created_at, format: :short) %>
+</button>
+<% end %>

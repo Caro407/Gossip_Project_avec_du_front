@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :gossips
   resources :welcome, only: [:show]
   resources :user_profile, only: [:show]
+  resources :city, only: [:show]
 
   root "gossips#index"
 

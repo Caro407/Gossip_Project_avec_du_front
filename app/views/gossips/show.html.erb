@@ -1,14 +1,18 @@
 <h1>POTIN N°<%= params[:id]%></h1>
 
 <div class="ml-2">
-  <p><span class="attribute">Auteur: </span>
-    <%= @gossip.user.full_name %></p>
+
   <p><span class="attribute">Titre: </span>
     <%= @gossip.title %></p>
   <p><span class="attribute">Contenu</span>
     <%= @gossip.content %></p>
   <p><span class="attribute">Date de création: </span>
     <%= I18n.l(@gossip.created_at, format: :long) %></p>
+
+    <p><span class="attribute">Auteur: </span>
+      <%= @gossip.user.full_name %></p>
+      <p><span class="attribute">Ville de résidence: </span>
+        <%= City.find(@gossip.user.city_id).name %></p>
 
   <%= link_to "Voir le profil de #{@gossip.user.full_name}", user_profile_path(@gossip.user_id)%>
 </div>
