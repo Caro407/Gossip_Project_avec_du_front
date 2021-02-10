@@ -14,6 +14,18 @@
       <p><span class="attribute">Ville de résidence: </span>
         <%= City.find(@gossip.user.city_id).name %></p>
 
+        <div class="list-group">
+          <% @gossip.comments.each do |comment| %>
+          <button type="button" class="list-group-item list-group-item-action">
+            <%= comment.user.first_name %>
+            <br/>
+            <%= link_to "#{comment.content}", gossip_comment_path(params[:id], comment.id)%>
+            <br/>
+            Ajouté le <%= I18n.l(comment.created_at, format: :short) %>
+          </button>
+          <% end %>
+          </div>
+
   <%= link_to "Modifier ce potin", edit_gossip_path(params[:id])%>
 <br />
 <%= link_to "Supprimer ce potin", gossip_path(params[:id]), "data-confirm": "Êtes-vous sûr?", "data-method": :delete%>

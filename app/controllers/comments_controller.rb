@@ -14,7 +14,6 @@ class CommentsController < ApplicationController
   end
 
   def create
-
     #1ère étape : récupérer les params
     user = User.find_by(first_name: create_params[:user])
 
@@ -30,7 +29,7 @@ class CommentsController < ApplicationController
 
     #3ème étape : save and redirect
     if @comments.save
-      redirect_to gossips_path
+      redirect_to gossip_path(create_params[:gossip_id])
       flash[:success] = "Commentaire créé !"
     else
       flash[:warning] = "Echec : " + @comments.errors.full_messages.join(" ")
