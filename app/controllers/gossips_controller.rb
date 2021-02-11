@@ -1,6 +1,10 @@
 class GossipsController < ApplicationController
+  before_action :check_user_logged_in, except: [:show, :index]
+  before_action :check_user_is_author, only: [:edit, :update, :destroy]
+
   def show
     @gossip = Gossip.find(params[:id])
+    @city = City.find(@gossip.user.city_id).name
   end
 
   def index
@@ -13,12 +17,12 @@ class GossipsController < ApplicationController
   end
 
   def create_params
-    params.permit(:user, :content, :title)
+    params.permit(:content, :title)
   end
 
   def create
     #1ère étape : récupérer les params
-    user = User.find_by(first_name: create_params[:user])
+    user = helpers.current_user
 
     #2ème étape : on prépare la nouvelle instance
     @gossip = Gossip.new(user: user, content: create_params[:content], title: create_params[:title])
@@ -84,5 +88,23 @@ class GossipsController < ApplicationController
     @gossip.destroy
 
     redirect_to gossips_path
+  end
+
+  private
+
+  def check_user_logged_in
+    if helpers.logged_in? == false
+      redirect_to new_session_path
+      flash[:warning] = "Tu dois d'abord te connecter."
+      return
+    end
+  end
+
+  def check_user_is_author
+    if helpers.current_user != Gossip.find(params[:id]).user
+      redirect_to gossip_path(params[:id])
+      flash[:warning] = "Tu n'es pas l'auteur de ce potin : tu ne peux donc pas le modifier."
+      return
+    end
   end
 end
