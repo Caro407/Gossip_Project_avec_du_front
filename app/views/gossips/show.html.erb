@@ -1,51 +1,67 @@
-<h1>POTIN N°<%= params[:id]%></h1>
+<div class="container">
+  <h1 class="text-center"><%= @gossip.title %></h1>
 
-<div class="ml-2">
+  <div class="ml-2">
 
-  <p><span class="attribute">Titre: </span>
-    <%= @gossip.title %></p>
-  <p><span class="attribute">Contenu</span>
-    <%= @gossip.content %></p>
-  <p><span class="attribute">Date de création: </span>
-    <%= I18n.l(@gossip.created_at, format: :long) %></p>
+    <div class="card mb-5">
 
-    <p><span class="attribute">Auteur: </span>
-      <%= @gossip.user.full_name %></p>
-      <p><span class="attribute">Ville de résidence: </span>
-        <%= @city %></p>
+      <div class="card-header d-flex justify-content-between">
+        <p><span class="font-weight-bold text-primary"> Potin n°<%= @gossip.id %>.</span></p>
+        <p>
+          <span class="badge badge-border badge-pill">
+            <% if logged_in? %>
+              <% like = current_user.find_like(@gossip) %>
+              <% if like.blank? %>
+                <%= link_to "♡", gossip_likes_path(@gossip.id), "data-method": :post, class: 'like-btn'%>
+              <% else %>
+                <%= link_to "❤", gossip_like_path(@gossip.id, like.id), "data-method": :delete, class: 'like-btn'%>
+              <% end %>
+            <% end %>
+          </span>
 
-        <div class="list-group">
-          <h3>Commentaires :</h3>
-          <% @gossip.comments.each do |comment| %>
-          <button type="button" class="list-group-item list-group-item-action">
-            <%= comment.user.first_name %>
-            <br/>
-            <%= link_to "#{comment.content}", gossip_comment_path(params[:id], comment.id)%>
-            <br/>
-            Ajouté le <%= I18n.l(comment.created_at, format: :short) %>
-          </button>
-          <% end %>
-          </div>
+        <span class="badge badge-primary badge-pill"><%= @gossip.comments.count %> commentaire(s)</span>
+        <span class="badge badge-secondary badge-pill"><%= @gossip.likes.count %> like(s)</span>
+        </p>
+      </div>
 
-<% if current_user == @gossip.user %>
-  <%= link_to "Modifier ce potin", edit_gossip_path(params[:id])%>
-<br />
-<%= link_to "Supprimer ce potin", gossip_path(params[:id]), "data-confirm": "Êtes-vous sûr?", "data-method": :delete%>
-<br />
-<% end %>
-<% if logged_in? %>
-  <%= link_to "Ajouter un commentaire", new_gossip_comment_path(@gossip.id)  %>
-<br />
-  <% like = current_user.find_like(@gossip) %>
-  <% if like.blank? %>
-    <%= link_to "♡", gossip_likes_path(@gossip.id), "data-method": :post, class: 'like-btn'%>
-    <% else %>
-    <%= link_to "❤", gossip_like_path(@gossip.id, like.id), "data-method": :delete, class: 'like-btn'%>
-  <% end %>
-<% end %>
-<br />
-<br />
-  <%= link_to "Voir le profil de #{@gossip.user.full_name}", user_path(@gossip.user_id)%>
-  <br />
-  <%= link_to "Voir les potins de #{@gossip.user.city.name}", city_path(@gossip.user.city)%>
+      <div class="card-body">
+        <blockquote class="blockquote mb-0">
+
+          <p class="text-secondary"><%= @gossip.content %></p>
+
+          <footer class="blockquote-footer">
+            <%= I18n.l(@gossip.created_at, format: :short)%> à <%= link_to @city, city_path(@gossip.user.city)%> par
+            <cite title="Source Title">
+              <%= link_to @gossip.user.full_name, user_path(@gossip.user_id)%>
+            </cite>
+          </footer>
+
+        </blockquote>
+      </div>
+    </div>
+
+    <div class="list-group p-5">
+      <h3>Commentaires :</h3>
+      <% @gossip.comments.each do |comment| %>
+      <button type="button" class="list-group-item list-group-item-action">
+        <span class="font-weight-bold"><%= comment.user.first_name %></span>
+        <br/>
+        <%= link_to "#{comment.content}", gossip_comment_path(params[:id], comment.id)%>
+        <br/>
+        <em>Ajouté le <%= I18n.l(comment.created_at, format: :short) %></em>
+      </button>
+      <% end %>
+
+    <% if current_user == @gossip.user %>
+      <%= link_to "Modifier ce potin", edit_gossip_path(params[:id])%>
+    <br />
+    <%= link_to "Supprimer ce potin", gossip_path(params[:id]), "data-confirm": "Êtes-vous sûr?", "data-method": :delete%>
+    <br />
+    <% end %>
+    <% if logged_in? %>
+      <%= link_to "Ajouter un commentaire", new_gossip_comment_path(@gossip.id), class: 'mt-2 btn btn-primary' %>
+      <br />
+    <% end %>
+  </div>
+  </div>
 </div>

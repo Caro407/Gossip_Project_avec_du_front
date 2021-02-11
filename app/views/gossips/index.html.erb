@@ -9,34 +9,47 @@
   </p>
 </div>
 
-
 <p class="ml-2">Voici la liste de tous les potins envoyés par nos utilisateurs :</p>
 
-
 <div class="container">
-<div class="list-group">
-  <% Gossip.order(:id).each do |gossip| %>
-  <button type="button" class="list-group-item list-group-item-action">
-    <span class="font-weight-bold"> Potin n°<%= gossip.id %>.</span>
-    <span class="badge badge-primary badge-pill"><%= gossip.comments.count %> commentaire(s)</span>
-    <span class="badge badge-secondary badge-pill"><%= gossip.likes.count %> like(s)</span>
-    <br/>
-    <%= link_to "#{gossip.title}", gossip_path(gossip.id)%>
-    <br/>
-    Ajouté le <%= I18n.l(gossip.created_at, format: :short) %>
-    <br />
-    <% if logged_in? %>
-    <%= link_to "Ajouter un commentaire", new_gossip_comment_path(gossip.id)  %>
-    <br />
-      <% like = current_user.find_like(gossip) %>
-      <% if like.blank? %>
-        <%= link_to "♡", gossip_likes_path(gossip.id), "data-method": :post, class: 'like-btn'%>
-        <% else %>
-        <%= link_to "❤", gossip_like_path(gossip.id, like.id), "data-method": :delete, class: 'like-btn'%>
-      <% end %>
-    <% end %>
-  </button>
+  <div class="list-group mb-5">
+    <% Gossip.order(:id).each do |gossip| %>
+      <button type="button" class="list-group-item list-group-item-action">
+        <div class="d-flex justify-content-between">
+          <p>
+            <span class="font-weight-bold">
+              Potin n°<%= gossip.id %>.</span>
+          </p>
 
-  <% end %>
-</div>
-</div>
+          <p>
+            <% if logged_in? %>
+              <span class='badge badge-border'>
+                <% like = current_user.find_like(gossip) %>
+                  <% if like.blank? %>
+                    <%= link_to "♡", gossip_likes_path(gossip.id), "data-method": :post, class: 'like-btn'%>
+                  <% else %>
+                    <%= link_to "❤", gossip_like_path(gossip.id, like.id), "data-method": :delete, class: 'like-btn'%>
+                  <% end %>
+                </span>
+              <% end %>
+              <span class="badge badge-primary badge-pill"><%= gossip.comments.count %>
+                commentaire(s)</span>
+              <span class="badge badge-secondary badge-pill"><%= gossip.likes.count %>
+                like(s)</span>
+            </p>
+          </div>
+          <%= link_to "#{gossip.title}", gossip_path(gossip.id)%>
+
+          <p class="text-right">
+            <span class="mr-1"> Ecrit par <span class="font-weight-bold"><%= gossip.user.full_name %></span> </span>
+            <span class="mr-3">Ajouté le
+              <%= I18n.l(gossip.created_at, format: :short) %></span>
+            <% if logged_in? %>
+              <span><%= link_to "Commenter", new_gossip_comment_path(gossip.id), class:"btn btn-sm btn-outline-dark ", title: 'Commenter !' %></span>
+            <% end %>
+          </p>
+        </button>
+
+      <% end %>
+    </div>
+  </div>
