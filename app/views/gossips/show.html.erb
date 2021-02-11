@@ -15,6 +15,7 @@
         <%= @city %></p>
 
         <div class="list-group">
+          <h3>Commentaires :</h3>
           <% @gossip.comments.each do |comment| %>
           <button type="button" class="list-group-item list-group-item-action">
             <%= comment.user.first_name %>
@@ -32,7 +33,19 @@
 <%= link_to "Supprimer ce potin", gossip_path(params[:id]), "data-confirm": "Êtes-vous sûr?", "data-method": :delete%>
 <br />
 <% end %>
-<%= link_to "Ajouter un commentaire", new_gossip_comment_path(params[:id]) %>
+<% if logged_in? %>
+  <%= link_to "Ajouter un commentaire", new_gossip_comment_path(@gossip.id)  %>
+<br />
+  <% like = current_user.find_like(@gossip) %>
+  <% if like.blank? %>
+    <%= link_to "♡", gossip_likes_path(@gossip.id), "data-method": :post, class: 'like-btn'%>
+    <% else %>
+    <%= link_to "❤", gossip_like_path(@gossip.id, like.id), "data-method": :delete, class: 'like-btn'%>
+  <% end %>
+<% end %>
+<br />
 <br />
   <%= link_to "Voir le profil de #{@gossip.user.full_name}", user_path(@gossip.user_id)%>
+  <br />
+  <%= link_to "Voir les potins de #{@gossip.user.city.name}", city_path(@gossip.user.city)%>
 </div>

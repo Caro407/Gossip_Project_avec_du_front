@@ -1,12 +1,27 @@
 <h1><%= @city.name %></h1>
 
+<p class="ml-2"><span class="attribute">Zip code: </span><%= @city.zip_code %></p>
 
-<%= @gossips.each do |gossip|%>
+
+<% @gossips.each do |gossip|%>
 <button type="button" class="list-group-item list-group-item-action">
   Potin n°<%= gossip.id %>.
+  <span class="badge badge-primary badge-pill"><%= gossip.comments.count %> commentaire(s)</span>
+  <span class="badge badge-secondary badge-pill"><%= gossip.likes.count %> like(s)</span>
   <br/>
   <%= link_to "#{gossip.title}", gossip_path(gossip.id)%>
   <br/>
   Ajouté le <%= I18n.l(gossip.created_at, format: :short) %>
+  <br />
+  <% if logged_in? %>
+  <%= link_to "Ajouter un commentaire", new_gossip_comment_path(params[:id])  %>
+  <br />
+    <% like = current_user.find_like(gossip) %>
+    <% if like.blank? %>
+      <%= link_to "♡", gossip_likes_path(gossip.id), "data-method": :post, class: 'like-btn'%>
+      <% else %>
+      <%= link_to "❤", gossip_like_path(gossip.id, like.id), "data-method": :delete, class: 'like-btn' %>
+    <% end %>
+  <% end %>
 </button>
 <% end %>

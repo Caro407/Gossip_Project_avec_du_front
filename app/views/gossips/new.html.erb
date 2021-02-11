@@ -1,15 +1,17 @@
-<%= form_tag gossips_path, method: "post" do %>
+<div class="form-group container">
+  <%= form_tag gossips_path, method: "post" do %>
 
-<%= label_tag 'Title' %>
-<%= text_field_tag 'title', @gossip.title %>
-<br/>
-<br/>
+  <%= label_tag 'Title' %>
+  <%= text_field_tag 'title', @gossip.title, class: "form-control" %>
+  <br/>
+  <br/>
 
-<%= label_tag 'Content' %>
-<%= text_area_tag 'content', @gossip.content %>
-<br/>
-<br/>
+  <%= label_tag 'Content' %>
+  <%= text_area_tag 'content', @gossip.content, class: "form-control" %>
+  <br/>
+  <br/>
 
-<%= submit_tag "Créer le potin" %>
+  <%= submit_tag "Créer le potin", class: "form-control btn btn-primary" %>
 
-<% end %>
+  <% end %>
+</div>

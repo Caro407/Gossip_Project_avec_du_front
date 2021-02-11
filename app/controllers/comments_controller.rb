@@ -10,12 +10,12 @@ class CommentsController < ApplicationController
   end
 
   def create_params
-    params.permit(:gossip_id, :content, :user)
+    params.permit(:gossip_id, :content)
   end
 
   def create
     #1ère étape : récupérer les params
-    user = User.find_by(first_name: create_params[:user])
+    user = helpers.current_user
 
     #2ème étape : on prépare la nouvelle instance
     @comments = @gossip.comments.build(user: user, content: create_params[:content], gossip: @gossip)

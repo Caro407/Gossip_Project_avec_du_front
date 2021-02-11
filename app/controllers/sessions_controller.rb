@@ -18,6 +18,7 @@ class SessionsController < ApplicationController
       flash[:success] = "Bienvenue #{@user.first_name} !"
     else
       flash.now[:danger] = "Invalid email/password combination"
+      @user = User.new
       render "new"
     end
   end
