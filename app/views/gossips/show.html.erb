@@ -32,5 +32,5 @@
 <br />
 <%= link_to "Ajouter un commentaire", new_gossip_comment_path(params[:id]) %>
 <br />
-  <%= link_to "Voir le profil de #{@gossip.user.full_name}", user_profile_path(@gossip.user_id)%>
+  <%= link_to "Voir le profil de #{@gossip.user.full_name}", user_path(@gossip.user_id)%>
 </div>

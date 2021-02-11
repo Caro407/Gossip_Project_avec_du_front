@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :comments
   end
   resources :welcome, only: [:show]
-  resources :user_profile, only: [:show]
+  resources :users, only: [:show, :new, :create]
   resources :city, only: [:show]
 
   root "gossips#index"
