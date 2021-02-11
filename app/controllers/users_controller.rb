@@ -23,6 +23,7 @@ class UsersController < ApplicationController
 
     #2ème étape : save and redirect
     if @user.save
+      helpers.log_in(@user)
       redirect_to gossips_path
       flash[:success] = "Bienvenue #{@user.first_name} !"
     else

@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   resources :welcome, only: [:show]
   resources :users, only: [:show, :new, :create]
   resources :city, only: [:show]
+  resources :sessions, only: [:new, :create]
+
+  delete "/sessions", to: "sessions#destroy", as: "delete_session"
 
   root "gossips#index"
 

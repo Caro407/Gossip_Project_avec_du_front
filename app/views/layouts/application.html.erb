@@ -28,7 +28,12 @@
           <div class="navbar-nav">
             <%= link_to "Team", static_pages_team_path, class: "nav-item nav-link" %>
             <%= link_to "Contact", static_pages_contact_path, class: "nav-item nav-link" %>
+            <% if logged_in? %>
+            <%= link_to "Se déconnecter", delete_session_path, "data-method": :delete, class: "nav-item nav-link" %>
+            <% else %>
             <%= link_to "S'inscrire", new_user_path, class: "nav-item nav-link" %>
+            <%= link_to "Se connecter", new_session_path, class: "nav-item nav-link" %>
+            <% end %>
           </div>
         </div>
       </nav>
